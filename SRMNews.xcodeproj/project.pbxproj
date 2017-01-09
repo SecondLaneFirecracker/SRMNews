@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		0329F2141E2383B100D66894 /* SRMNewsTopicButton.m in Sources */ = {isa = PBXBuildFile; fileRef = 0329F2131E2383B100D66894 /* SRMNewsTopicButton.m */; };
 		03DFC9FA1E15FE55003266A0 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 03DFC9F91E15FE55003266A0 /* main.m */; };
 		03DFC9FD1E15FE55003266A0 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 03DFC9FC1E15FE55003266A0 /* AppDelegate.m */; };
 		03DFCA051E15FE55003266A0 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 03DFCA041E15FE55003266A0 /* Assets.xcassets */; };
@@ -20,6 +21,8 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		0329F2121E2383B100D66894 /* SRMNewsTopicButton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SRMNewsTopicButton.h; sourceTree = "<group>"; };
+		0329F2131E2383B100D66894 /* SRMNewsTopicButton.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SRMNewsTopicButton.m; sourceTree = "<group>"; };
 		03DFC9F51E15FE55003266A0 /* SRMNews.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SRMNews.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		03DFC9F91E15FE55003266A0 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		03DFC9FB1E15FE55003266A0 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
@@ -50,6 +53,15 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		0329F2051E23788700D66894 /* View */ = {
+			isa = PBXGroup;
+			children = (
+				0329F2121E2383B100D66894 /* SRMNewsTopicButton.h */,
+				0329F2131E2383B100D66894 /* SRMNewsTopicButton.m */,
+			);
+			path = View;
+			sourceTree = "<group>";
+		};
 		03DFC9EC1E15FE55003266A0 = {
 			isa = PBXGroup;
 			children = (
@@ -131,6 +143,7 @@
 		03DFCA251E1653FC003266A0 /* News */ = {
 			isa = PBXGroup;
 			children = (
+				0329F2051E23788700D66894 /* View */,
 				03DFCA261E1654DA003266A0 /* SRMNewsViewController.h */,
 				03DFCA271E1654DA003266A0 /* SRMNewsViewController.m */,
 			);
@@ -211,6 +224,7 @@
 			files = (
 				03DFCA281E1654DA003266A0 /* SRMNewsViewController.m in Sources */,
 				03DFCA1C1E1631E2003266A0 /* SRMTabBarController.m in Sources */,
+				0329F2141E2383B100D66894 /* SRMNewsTopicButton.m in Sources */,
 				03DFCA211E163FBC003266A0 /* UIColor+Hex.m in Sources */,
 				03DFCA241E164A81003266A0 /* SRMNavigationController.m in Sources */,
 				03DFC9FD1E15FE55003266A0 /* AppDelegate.m in Sources */,
@@ -365,6 +379,7 @@
 				03DFCA0E1E15FE55003266A0 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};
