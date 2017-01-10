@@ -9,12 +9,13 @@
 #import "SRMNewsViewController.h"
 #import "SRMNewsTopicButton.h"
 #import "UIColor+Hex.h"
+#import "Masonry.h"
 
 @interface SRMNewsViewController () <UIScrollViewDelegate>
 
 @property (weak, nonatomic) IBOutlet UIScrollView *topicScrollView;
 @property (weak, nonatomic) IBOutlet UIScrollView *newsListScrollView;
-@property (nonatomic) UIButton *currentTopicButton;
+@property (nonatomic) SRMNewsTopicButton *currentTopicButton;
 @property (nonatomic) NSArray *topicArray;
 
 @end
@@ -33,9 +34,19 @@
 
 #pragma mark - Responder
     
-- (void)didTouchTopicButton:(UIButton *)topicButton {
+- (void)didTouchTopicButton:(SRMNewsTopicButton *)topicButton {
+    if (self.currentTopicButton == topicButton) {
+        return;
+    }
+    
+    [self.currentTopicButton setSelectionEffectlevel:0 withAnimationDuration:0.3];
+    [topicButton setSelectionEffectlevel:1 withAnimationDuration:0.3];
+    self.currentTopicButton = topicButton;
+    // 使[- setContentOffset: animated:]方法执行后不触发代理方法[- scrollViewDidScroll:]的唯一一次执行，否则影响话题按钮设置动效。
+    self.newsListScrollView.delegate = nil;
     CGFloat offsetX = topicButton.tag * CGRectGetWidth(self.newsListScrollView.frame);
     [self.newsListScrollView setContentOffset:CGPointMake(offsetX, 0) animated:NO];
+    self.newsListScrollView.delegate = self;
     [self scrollViewDidEndDecelerating:self.newsListScrollView];
 }
 
@@ -43,14 +54,28 @@
 
 - (void)scrollViewDidEndDecelerating:(UIScrollView *)scrollView {
     NSInteger index = scrollView.contentOffset.x / CGRectGetWidth(scrollView.frame);
-    UIButton *topicButton = self.topicScrollView.subviews[index];
-    [self selectTopicButton:topicButton];
+    SRMNewsTopicButton *topicButton = self.topicScrollView.subviews[index];
+    self.currentTopicButton = topicButton;
     [self scrollTopicButtonToCenter:topicButton];
     [self addNewsListViewAtIndex:index];
 }
+
+- (void)scrollViewDidScroll:(UIScrollView *)scrollView {
+    CGFloat value = scrollView.contentOffset.x / CGRectGetWidth(scrollView.frame);
     
-- (void)scrollViewDidEndScrollingAnimation:(UIScrollView *)scrollView {
-    [self scrollViewDidEndDecelerating:scrollView];
+    if (value < 0 || value > self.topicArray.count - 1) {
+        return;
+    }
+    
+    NSInteger index = (NSInteger)value;
+    float level = value - index;
+    SRMNewsTopicButton *topicButton = self.topicScrollView.subviews[index];
+    topicButton.selectionEffectlevel = 1 - level;
+    
+    if (index < self.topicArray.count - 1) {
+        SRMNewsTopicButton *nextTopicButton = self.topicScrollView.subviews[index + 1];
+        nextTopicButton.selectionEffectlevel = level;
+    }
 }
     
 #pragma mark - Private
@@ -69,7 +94,6 @@
         UIButton *topicButton = [SRMNewsTopicButton buttonWithType:UIButtonTypeCustom];
         topicButton.tag = index;
         [topicButton setTitle:topicDictionary[@"tname"] forState:UIControlStateNormal];
-        [topicButton setTitle:topicDictionary[@"tname"] forState:UIControlStateSelected];
         [topicButton sizeToFit];
         [topicButton addTarget:self action:@selector(didTouchTopicButton:) forControlEvents:UIControlEventTouchUpInside];
         CGFloat pointY = (40 - CGRectGetHeight(topicButton.frame)) / 2;
@@ -94,14 +118,11 @@
         [topicLabel sizeToFit];
         topicLabel.center = newsListController.view.center;
         [newsListController.view addSubview:topicLabel];
+        [topicLabel mas_makeConstraints:^(MASConstraintMaker *make) {
+            make.center.equalTo(newsListController.view);
+        }];
         [self addChildViewController:newsListController];
     }];
-}
-    
-- (void)selectTopicButton:(UIButton *)topicButton {
-    self.currentTopicButton.selected = NO;
-    topicButton.selected = YES;
-    self.currentTopicButton = topicButton;
 }
     
 - (void)scrollTopicButtonToCenter:(UIButton *)topicButton {
@@ -112,11 +133,29 @@
 }
     
 - (void)addNewsListViewAtIndex:(NSInteger)index {
+    NSLog(@"%@", NSStringFromCGRect(self.newsListScrollView.bounds));
     UIView *newsListView = self.childViewControllers[index].view;
+    UIView *leftView = index > 0 ? self.childViewControllers[index - 1].view : nil;
+    UIView *rightView = index < self.childViewControllers.count - 1 ? self.childViewControllers[index + 1].view : nil;
     
     if (!newsListView.superview) {
         newsListView.frame = self.newsListScrollView.bounds;
         [self.newsListScrollView addSubview:newsListView];
+        NSLog(@"%@", NSStringFromCGRect(newsListView.frame));
+    }
+    
+    if (leftView && !leftView.superview) {
+        CGRect frame = self.newsListScrollView.bounds;
+        leftView.frame = CGRectMake(CGRectGetMinX(frame) - CGRectGetWidth(frame), CGRectGetMinY(frame), CGRectGetWidth(frame), CGRectGetHeight(frame));
+        [self.newsListScrollView addSubview:leftView];
+        NSLog(@"%@", NSStringFromCGRect(leftView.frame));
+    }
+    
+    if (rightView && !rightView.superview) {
+        CGRect frame = self.newsListScrollView.bounds;
+        rightView.frame = CGRectMake(CGRectGetMinX(frame) + CGRectGetWidth(frame), CGRectGetMinY(frame), CGRectGetWidth(frame), CGRectGetHeight(frame));
+        [self.newsListScrollView addSubview:rightView];
+        NSLog(@"%@", NSStringFromCGRect(rightView.frame));
     }
 }
 

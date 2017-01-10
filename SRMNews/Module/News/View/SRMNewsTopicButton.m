@@ -11,35 +11,32 @@
 
 @implementation SRMNewsTopicButton
 
-- (void)initialize {
-}
-    
-- (void)setTitle:(NSString *)title forState:(UIControlState)state {
-    [super setTitle:title forState:state];
-    NSMutableDictionary *attributesDictionary = [NSMutableDictionary dictionary];
-    attributesDictionary[NSFontAttributeName] = [UIFont systemFontOfSize:15];
-    
-    switch (state) {
-        case UIControlStateNormal:
-        attributesDictionary[NSForegroundColorAttributeName] = [UIColor darkGrayColor];
-        break;
-        case UIControlStateSelected:
-        attributesDictionary[NSForegroundColorAttributeName] = [UIColor colorwithHex:0xdf3030];
-        break;
-        default:
-        break;
+- (instancetype)initWithFrame:(CGRect)frame {
+    if (self = [super initWithFrame:frame]) {
+        [self initialize];
     }
     
-    NSAttributedString *attributedString = [[NSAttributedString alloc] initWithString:title attributes:attributesDictionary];
-    [self setAttributedTitle:attributedString forState:state];
+    return self;
 }
 
-- (void)setSelected:(BOOL)selected {
-    [super setSelected:selected];
-    CGAffineTransform transform = selected ? CGAffineTransformMakeScale(1.3, 1.3) : CGAffineTransformMakeScale(1, 1);
-    [UIView animateWithDuration:0.3 animations:^{
-        self.transform = transform;
+- (void)initialize {
+    self.titleLabel.font = [UIFont systemFontOfSize:15];
+    [self setTitleColor:[UIColor colorwithHex:0x333333] forState:UIControlStateNormal];
+}
+
+- (void)setSelectionEffectlevel:(float)selectionEffectlevel {
+    _selectionEffectlevel = selectionEffectlevel;
+    CGFloat scale = 1 + 0.3 * selectionEffectlevel;
+    self.transform = CGAffineTransformMakeScale(scale, scale);
+    NSInteger redValue = (NSInteger)(0xdf * selectionEffectlevel) << 16;
+    NSInteger colorHex = redValue + 0x3333;
+    [self setTitleColor:[UIColor colorwithHex:colorHex] forState:UIControlStateNormal];
+}
+
+- (void)setSelectionEffectlevel:(float)selectionEffectlevel withAnimationDuration:(NSTimeInterval)duration {
+    [UIView animateWithDuration:duration animations:^{
+        self.selectionEffectlevel = selectionEffectlevel;
     }];
 }
-    
+
 @end
