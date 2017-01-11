@@ -7,6 +7,7 @@
 //
 
 #import "SRMNewsViewController.h"
+#import "SRMNewsListViewController.h"
 #import "SRMNewsTopicButton.h"
 #import "UIColor+Hex.h"
 #import "Masonry.h"
@@ -41,7 +42,6 @@
     
     [self.currentTopicButton setSelectionEffectlevel:0 withAnimationDuration:0.3];
     [topicButton setSelectionEffectlevel:1 withAnimationDuration:0.3];
-    self.currentTopicButton = topicButton;
     // 使[- setContentOffset: animated:]方法执行后不触发代理方法[- scrollViewDidScroll:]的唯一一次执行，否则影响话题按钮设置动效。
     self.newsListScrollView.delegate = nil;
     CGFloat offsetX = topicButton.tag * CGRectGetWidth(self.newsListScrollView.frame);
@@ -106,12 +106,10 @@
 }
 
 - (void)initializeNewsListScrollView {
-    self.newsListScrollView.contentSize = CGSizeMake(CGRectGetWidth(self.newsListScrollView.frame) * self.topicArray.count, 0);
-    // 使初始化时新闻列表 scrollView 为第一页的设置可以出发滑动代理，完成新闻列表页面的加载。
-    self.newsListScrollView.contentOffset = CGPointMake(-1, 0);
+    self.newsListScrollView.contentSize = CGSizeMake(CGRectGetWidth([UIScreen mainScreen].bounds) * self.topicArray.count, 0);
     
     [self.topicArray enumerateObjectsUsingBlock:^(NSDictionary *topicDictionary, NSUInteger index, BOOL * _Nonnull stop) {
-        UIViewController *newsListController = [UIViewController new];
+        UIViewController *newsListController = [SRMNewsListViewController new];
         newsListController.view.backgroundColor = [UIColor lightGrayColor];
         UILabel *topicLabel = [UILabel new];
         topicLabel.text = topicDictionary[@"tname"];
@@ -133,29 +131,29 @@
 }
     
 - (void)addNewsListViewAtIndex:(NSInteger)index {
-    NSLog(@"%@", NSStringFromCGRect(self.newsListScrollView.bounds));
     UIView *newsListView = self.childViewControllers[index].view;
     UIView *leftView = index > 0 ? self.childViewControllers[index - 1].view : nil;
     UIView *rightView = index < self.childViewControllers.count - 1 ? self.childViewControllers[index + 1].view : nil;
+    CGFloat pointX = CGRectGetMinX(self.newsListScrollView.bounds);
+    CGFloat pointY = CGRectGetMinY(self.newsListScrollView.bounds);
+    CGFloat width = CGRectGetWidth(self.newsListScrollView.bounds);
+    CGFloat height = CGRectGetHeight(self.newsListScrollView.bounds);
     
     if (!newsListView.superview) {
-        newsListView.frame = self.newsListScrollView.bounds;
+        newsListView.frame = CGRectMake(pointX, pointY, width, height);
         [self.newsListScrollView addSubview:newsListView];
-        NSLog(@"%@", NSStringFromCGRect(newsListView.frame));
     }
+    
+    // 首次渲染新闻列表 view 时，新闻列表 scroll view 的尺寸未设置正确，而之后新闻列表 view 随着 scroll view 的尺寸改变，也只会改变自己的尺寸，原点不会改变，所以为了新闻列表 view 的原点能够设置正确，原点 x 轴的增量要使用屏幕宽度。
     
     if (leftView && !leftView.superview) {
-        CGRect frame = self.newsListScrollView.bounds;
-        leftView.frame = CGRectMake(CGRectGetMinX(frame) - CGRectGetWidth(frame), CGRectGetMinY(frame), CGRectGetWidth(frame), CGRectGetHeight(frame));
+        leftView.frame = CGRectMake(pointX - CGRectGetWidth([UIScreen mainScreen].bounds), pointY, width, height);
         [self.newsListScrollView addSubview:leftView];
-        NSLog(@"%@", NSStringFromCGRect(leftView.frame));
     }
-    
+
     if (rightView && !rightView.superview) {
-        CGRect frame = self.newsListScrollView.bounds;
-        rightView.frame = CGRectMake(CGRectGetMinX(frame) + CGRectGetWidth(frame), CGRectGetMinY(frame), CGRectGetWidth(frame), CGRectGetHeight(frame));
+        rightView.frame = CGRectMake(pointX + CGRectGetWidth([UIScreen mainScreen].bounds), pointY, width, height);
         [self.newsListScrollView addSubview:rightView];
-        NSLog(@"%@", NSStringFromCGRect(rightView.frame));
     }
 }
 

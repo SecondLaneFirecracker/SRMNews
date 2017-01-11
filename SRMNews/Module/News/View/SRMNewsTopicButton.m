@@ -28,8 +28,8 @@
     _selectionEffectlevel = selectionEffectlevel;
     CGFloat scale = 1 + 0.3 * selectionEffectlevel;
     self.transform = CGAffineTransformMakeScale(scale, scale);
-    NSInteger redValue = (NSInteger)(0xdf * selectionEffectlevel) << 16;
-    NSInteger colorHex = redValue + 0x3333;
+    NSInteger redValue = (NSInteger)((0xdf - 0x33) * selectionEffectlevel) << 16;
+    NSInteger colorHex = redValue + 0x333333;
     [self setTitleColor:[UIColor colorwithHex:colorHex] forState:UIControlStateNormal];
 }
 

@@ -8,6 +8,8 @@
 
 /* Begin PBXBuildFile section */
 		0329F2141E2383B100D66894 /* SRMNewsTopicButton.m in Sources */ = {isa = PBXBuildFile; fileRef = 0329F2131E2383B100D66894 /* SRMNewsTopicButton.m */; };
+		0329F2171E25CD1400D66894 /* SRMNewsView.m in Sources */ = {isa = PBXBuildFile; fileRef = 0329F2161E25CD1400D66894 /* SRMNewsView.m */; };
+		0329F21C1E26039F00D66894 /* SRMNewsListViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0329F21B1E26039F00D66894 /* SRMNewsListViewController.m */; };
 		03DFC9FA1E15FE55003266A0 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 03DFC9F91E15FE55003266A0 /* main.m */; };
 		03DFC9FD1E15FE55003266A0 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 03DFC9FC1E15FE55003266A0 /* AppDelegate.m */; };
 		03DFCA051E15FE55003266A0 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 03DFCA041E15FE55003266A0 /* Assets.xcassets */; };
@@ -24,6 +26,11 @@
 /* Begin PBXFileReference section */
 		0329F2121E2383B100D66894 /* SRMNewsTopicButton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SRMNewsTopicButton.h; sourceTree = "<group>"; };
 		0329F2131E2383B100D66894 /* SRMNewsTopicButton.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SRMNewsTopicButton.m; sourceTree = "<group>"; };
+		0329F2151E25CD1400D66894 /* SRMNewsView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SRMNewsView.h; sourceTree = "<group>"; };
+		0329F2161E25CD1400D66894 /* SRMNewsView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SRMNewsView.m; sourceTree = "<group>"; };
+		0329F2181E25D09400D66894 /* Reveal.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Reveal.framework; sourceTree = "<group>"; };
+		0329F21A1E26039F00D66894 /* SRMNewsListViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SRMNewsListViewController.h; sourceTree = "<group>"; };
+		0329F21B1E26039F00D66894 /* SRMNewsListViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SRMNewsListViewController.m; sourceTree = "<group>"; };
 		03DFC9F51E15FE55003266A0 /* SRMNews.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SRMNews.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		03DFC9F91E15FE55003266A0 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		03DFC9FB1E15FE55003266A0 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
@@ -63,6 +70,8 @@
 			children = (
 				0329F2121E2383B100D66894 /* SRMNewsTopicButton.h */,
 				0329F2131E2383B100D66894 /* SRMNewsTopicButton.m */,
+				0329F2151E25CD1400D66894 /* SRMNewsView.h */,
+				0329F2161E25CD1400D66894 /* SRMNewsView.m */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -70,6 +79,7 @@
 		03DFC9EC1E15FE55003266A0 = {
 			isa = PBXGroup;
 			children = (
+				0329F2181E25D09400D66894 /* Reveal.framework */,
 				03DFC9F71E15FE55003266A0 /* SRMNews */,
 				03DFC9F61E15FE55003266A0 /* Products */,
 				A405392AA26F81FA15E0BCB4 /* Pods */,
@@ -153,6 +163,8 @@
 				0329F2051E23788700D66894 /* View */,
 				03DFCA261E1654DA003266A0 /* SRMNewsViewController.h */,
 				03DFCA271E1654DA003266A0 /* SRMNewsViewController.m */,
+				0329F21A1E26039F00D66894 /* SRMNewsListViewController.h */,
+				0329F21B1E26039F00D66894 /* SRMNewsListViewController.m */,
 			);
 			path = News;
 			sourceTree = "<group>";
@@ -208,7 +220,7 @@
 				TargetAttributes = {
 					03DFC9F41E15FE55003266A0 = {
 						CreatedOnToolsVersion = 8.2.1;
-						DevelopmentTeam = S6G597V837;
+						DevelopmentTeam = C38F6DTM82;
 						ProvisioningStyle = Automatic;
 					};
 				};
@@ -300,8 +312,10 @@
 			files = (
 				03DFCA281E1654DA003266A0 /* SRMNewsViewController.m in Sources */,
 				03DFCA1C1E1631E2003266A0 /* SRMTabBarController.m in Sources */,
+				0329F2171E25CD1400D66894 /* SRMNewsView.m in Sources */,
 				0329F2141E2383B100D66894 /* SRMNewsTopicButton.m in Sources */,
 				03DFCA211E163FBC003266A0 /* UIColor+Hex.m in Sources */,
+				0329F21C1E26039F00D66894 /* SRMNewsListViewController.m in Sources */,
 				03DFCA241E164A81003266A0 /* SRMNavigationController.m in Sources */,
 				03DFC9FD1E15FE55003266A0 /* AppDelegate.m in Sources */,
 				03DFC9FA1E15FE55003266A0 /* main.m in Sources */,
@@ -416,11 +430,24 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
-				DEVELOPMENT_TEAM = S6G597V837;
+				DEVELOPMENT_TEAM = C38F6DTM82;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)",
+				);
 				INFOPLIST_FILE = SRMNews/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = com.sr.SRMNew;
+				OTHER_LDFLAGS = (
+					"$(inherited)",
+					"-ObjC",
+					"-l\"Masonry\"",
+					"-framework",
+					"\"Foundation\"",
+					"-framework",
+					"\"UIKit\"",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = com.sr.SRMNews;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
 			name = Debug;
@@ -431,11 +458,15 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
-				DEVELOPMENT_TEAM = S6G597V837;
+				DEVELOPMENT_TEAM = C38F6DTM82;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)",
+				);
 				INFOPLIST_FILE = SRMNews/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = com.sr.SRMNew;
+				PRODUCT_BUNDLE_IDENTIFIER = com.sr.SRMNews;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
 			name = Release;

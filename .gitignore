@@ -64,3 +64,6 @@ iOSInjectionProject/
 
 # Mac OS directory description file
 .DS_Store
+
+# Reveal
+Reveal.framework/*
