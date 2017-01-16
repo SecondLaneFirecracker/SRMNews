@@ -1,5 +1,5 @@
-<?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="11762" systemVersion="15G31" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="47H-YA-hcd">
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="11762" systemVersion="16C67" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="47H-YA-hcd">
     <device id="retina5_5" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
@@ -60,6 +60,36 @@
                             </scrollView>
                             <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" pagingEnabled="YES" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" translatesAutoresizingMaskIntoConstraints="NO" id="C6j-72-RKl">
                                 <rect key="frame" x="0.0" y="40" width="414" height="588"/>
+                                <subviews>
+                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="2gw-24-yTI">
+                                        <rect key="frame" x="0.0" y="0.0" width="414" height="588"/>
+                                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                    </view>
+                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="fbj-pX-rZV">
+                                        <rect key="frame" x="414" y="0.0" width="414" height="588"/>
+                                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                    </view>
+                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Yvt-28-Mna">
+                                        <rect key="frame" x="828" y="0.0" width="414" height="588"/>
+                                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                    </view>
+                                </subviews>
+                                <constraints>
+                                    <constraint firstItem="Yvt-28-Mna" firstAttribute="top" secondItem="fbj-pX-rZV" secondAttribute="top" id="0Vy-KI-tv9"/>
+                                    <constraint firstItem="fbj-pX-rZV" firstAttribute="width" secondItem="2gw-24-yTI" secondAttribute="width" id="2GK-Fy-N0Y"/>
+                                    <constraint firstItem="fbj-pX-rZV" firstAttribute="leading" secondItem="2gw-24-yTI" secondAttribute="trailing" id="CIE-Bd-yZ2"/>
+                                    <constraint firstItem="2gw-24-yTI" firstAttribute="top" secondItem="C6j-72-RKl" secondAttribute="top" id="DuC-eY-4GU"/>
+                                    <constraint firstItem="Yvt-28-Mna" firstAttribute="leading" secondItem="fbj-pX-rZV" secondAttribute="trailing" id="HqQ-xk-cqZ"/>
+                                    <constraint firstItem="Yvt-28-Mna" firstAttribute="height" secondItem="fbj-pX-rZV" secondAttribute="height" id="IgB-mW-4sn"/>
+                                    <constraint firstItem="2gw-24-yTI" firstAttribute="leading" secondItem="C6j-72-RKl" secondAttribute="leading" id="K6d-jt-rul"/>
+                                    <constraint firstItem="Yvt-28-Mna" firstAttribute="width" secondItem="fbj-pX-rZV" secondAttribute="width" id="Kpu-9a-zze"/>
+                                    <constraint firstAttribute="bottom" secondItem="2gw-24-yTI" secondAttribute="bottom" id="Rdw-ZI-zIE"/>
+                                    <constraint firstItem="2gw-24-yTI" firstAttribute="height" secondItem="C6j-72-RKl" secondAttribute="height" id="SZL-1p-o64"/>
+                                    <constraint firstItem="fbj-pX-rZV" firstAttribute="top" secondItem="2gw-24-yTI" secondAttribute="top" id="UCM-Vs-C5M"/>
+                                    <constraint firstItem="2gw-24-yTI" firstAttribute="width" secondItem="C6j-72-RKl" secondAttribute="width" id="VDS-Bq-xuu"/>
+                                    <constraint firstItem="fbj-pX-rZV" firstAttribute="height" secondItem="2gw-24-yTI" secondAttribute="height" id="Wc5-tC-vWW"/>
+                                    <constraint firstAttribute="trailing" secondItem="Yvt-28-Mna" secondAttribute="trailing" id="vg8-at-05G"/>
+                                </constraints>
                                 <connections>
                                     <outlet property="delegate" destination="q5h-R4-UFK" id="Xwp-xU-i3f"/>
                                 </connections>
@@ -80,13 +110,16 @@
                     <navigationItem key="navigationItem" id="ChY-Te-RMO"/>
                     <simulatedToolbarMetrics key="simulatedBottomBarMetrics"/>
                     <connections>
+                        <outlet property="centerContainerView" destination="fbj-pX-rZV" id="M3q-qv-o9p"/>
+                        <outlet property="leftContainerView" destination="2gw-24-yTI" id="Zv6-mJ-YEW"/>
                         <outlet property="newsListScrollView" destination="C6j-72-RKl" id="Moo-Ad-yRk"/>
+                        <outlet property="rightContainerView" destination="Yvt-28-Mna" id="qdA-Qw-QdH"/>
                         <outlet property="topicScrollView" destination="VP8-8Q-DAB" id="HHf-ga-ZNb"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="1k2-Ut-QGI" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1085.5999999999999" y="-310.79460269865069"/>
+            <point key="canvasLocation" x="1085.5072463768117" y="-311.41304347826087"/>
         </scene>
         <!--Tab Bar Controller-->
         <scene sceneID="k7V-2E-Bgi">
