@@ -10,6 +10,7 @@
 #import "SRMNewsListViewController.h"
 #import "SRMNewsTopicButton.h"
 #import "UIColor+Hex.h"
+#import "UIScreen+Size.h"
 #import "Masonry.h"
 
 @interface SRMNewsViewController () <UIScrollViewDelegate>
@@ -19,7 +20,6 @@
 @property (weak, nonatomic) IBOutlet UIView *leftContainerView;
 @property (weak, nonatomic) IBOutlet UIView *centerContainerView;
 @property (weak, nonatomic) IBOutlet UIView *rightContainerView;
-@property (nonatomic) SRMNewsTopicButton *currentTopicButton;
 @property (nonatomic) NSInteger currentIndex;
 @property (nonatomic) NSArray *topicArray;
 
@@ -34,77 +34,126 @@
     [self initializeNavigationItem];
     [self initializeTopicScrollView];
     [self initializeNewsListScrollView];
+    // 避免默认点击第一个 topic 时触发重复点击的判断。
+    self.currentIndex = 1;
     [self didTouchTopicButton:self.topicScrollView.subviews.firstObject];
 }
 
 #pragma mark - Responder
     
 - (void)didTouchTopicButton:(SRMNewsTopicButton *)topicButton {
-    if (self.currentTopicButton == topicButton) {
+    SRMNewsTopicButton *currentTopicButton = self.topicScrollView.subviews[self.currentIndex];
+    
+    if (currentTopicButton == topicButton) {
         return;
     }
     
     // 点击话题按钮时直接显示对应列表，因为无滑动过程，所以要单独设置动效。
-    [self.currentTopicButton setSelectionEffectlevel:0 withAnimationDuration:0.3];
+    [currentTopicButton setSelectionEffectlevel:0 withAnimationDuration:0.3];
     [topicButton setSelectionEffectlevel:1 withAnimationDuration:0.3];
-    [self resetCurrentTopicButton:topicButton];
-    [self resetDisplayedViewAtIndex:topicButton.tag];
+    [self scrollNewCurrentTopicButton:topicButton];
+    self.currentIndex = topicButton.tag;
+    [self resetDisplayedViewAtIndex:self.currentIndex];
 }
 
 #pragma mark - UIScrollViewDelegate
 
 - (void)scrollViewDidEndDecelerating:(UIScrollView *)scrollView {
-    NSInteger index;
-    
-    if (scrollView.contentOffset.x > CGRectGetWidth([UIScreen mainScreen].bounds)) {
-        if (self.currentIndex != self.topicArray.count - 1) {
-            index = (self.currentIndex + 1) % self.topicArray.count;
-        } else {
+    if (scrollView.contentOffset.x > [UIScreen mainWidth]) {
+        if (self.currentIndex == self.topicArray.count - 1) {
             return;
+        } else if (self.currentIndex == 0) {
+            self.currentIndex = self.currentIndex + 2;
+        } else {
+            self.currentIndex = self.currentIndex + 1;
         }
-    } else if (scrollView.contentOffset.x < CGRectGetWidth([UIScreen mainScreen].bounds)) {
-        if (self.currentIndex != 0) {
-            index = (self.currentIndex - 1 + self.topicArray.count) % self.topicArray.count;
-        } else {
+    } else if (scrollView.contentOffset.x < [UIScreen mainWidth]) {
+        if (self.currentIndex == 0) {
             return;
+        } else if (self.currentIndex == self.topicArray.count - 1) {
+            self.currentIndex = self.currentIndex - 2;
+        } else {
+            self.currentIndex = self.currentIndex - 1;
         }
     } else {
         if (self.currentIndex == 0) {
-            index = self.currentIndex + 1;
+            self.currentIndex = self.currentIndex + 1;
         } else if (self.currentIndex == self.topicArray.count - 1) {
-            index = self.currentIndex - 1;
+            self.currentIndex = self.currentIndex - 1;
         } else {
             return;
         }
     }
 
-    SRMNewsTopicButton *topicButton = self.topicScrollView.subviews[index];
-    [self resetCurrentTopicButton:topicButton];
-    [self resetDisplayedViewAtIndex:index];
+    SRMNewsTopicButton *topicButton = self.topicScrollView.subviews[self.currentIndex];
+    [self scrollNewCurrentTopicButton:topicButton];
+    [self resetDisplayedViewAtIndex:self.currentIndex];
 }
 
 - (void)scrollViewDidScroll:(UIScrollView *)scrollView {
+    SRMNewsTopicButton *topicButton = self.topicScrollView.subviews[self.currentIndex];
     CGFloat value = scrollView.contentOffset.x / CGRectGetWidth(scrollView.frame);
     
-    if (value < 0 || value > 2) {
-        return;
-    }
-    
-    NSInteger index = (self.currentIndex - 1 + (NSInteger)floor(value) + self.topicArray.count) % self.topicArray.count;
-    
-    if (self.currentIndex == 0) {
-        index = (self.currentIndex + (NSInteger)floor(value) + self.topicArray.count) % self.topicArray.count;
-    } else if (self.currentIndex == self.topicArray.count - 1) {
-        index = (self.currentIndex - 2 + (NSInteger)floor(value) + self.topicArray.count) % self.topicArray.count;
-    }
-    
-    float level = 1 - fmodf(value, 1);
-    SRMNewsTopicButton *topicButton = self.topicScrollView.subviews[index];
-    topicButton.selectionEffectlevel = level;
-
-    if (index < self.topicArray.count - 1) {
-        SRMNewsTopicButton *nextTopicButton = self.topicScrollView.subviews[index + 1];
-        nextTopicButton.selectionEffectlevel = 1 - level;
+    // 判断新闻列表 scroll view 滑动的不同方向，修改 topic button 的样式。因为不支持轮播，所以
+    // 要考虑左右两个边界的情况。
+    if (value > 1 && value <= 2) {
+        value = value - 1;
+        
+        if (self.currentIndex == self.topicArray.count - 1) {
+            // 右边界情况，左边 view 滑入。
+            topicButton.selectionEffectlevel = value;
+            topicButton = self.topicScrollView.subviews[self.currentIndex - 1];
+            topicButton.selectionEffectlevel = 1 - value;
+        } else if (self.currentIndex == 0) {
+            // 左边界情况，快速滑动使右边边第三个 view 滑入。
+            topicButton = self.topicScrollView.subviews[self.currentIndex + 1];
+            topicButton.selectionEffectlevel = 1 - value;
+            topicButton = self.topicScrollView.subviews[self.currentIndex + 2];
+            topicButton.selectionEffectlevel = value;
+        } else {
+            // 默认情况，右边 view 滑入。
+            topicButton.selectionEffectlevel = 1 - value;
+            topicButton = self.topicScrollView.subviews[self.currentIndex + 1];
+            topicButton.selectionEffectlevel = value;
+        }
+    } else if (value >= 0 && value < 1) {
+        if (self.currentIndex == 0) {
+            // 左边界情况，右边 view 滑入。
+            topicButton.selectionEffectlevel = 1- value;
+            topicButton = self.topicScrollView.subviews[self.currentIndex + 1];
+            topicButton.selectionEffectlevel = value;
+        } else if (self.currentIndex == self.topicArray.count - 1) {
+            // 右边界情况，快速滑动使左边第三个 view 滑入。
+            topicButton = self.topicScrollView.subviews[self.currentIndex - 1];
+            topicButton.selectionEffectlevel = value;
+            topicButton = self.topicScrollView.subviews[self.currentIndex - 2];
+            topicButton.selectionEffectlevel = 1 - value;
+        } else {
+            // 默认情况，左边 view 滑入。
+            topicButton.selectionEffectlevel = value;
+            topicButton = self.topicScrollView.subviews[self.currentIndex - 1];
+            topicButton.selectionEffectlevel = 1 - value;
+        }
+    } else if (value == 1) {
+        if (self.currentIndex == 0) {
+            // 左边界情况，右边 view 完成滑入。
+            topicButton.selectionEffectlevel = 1 - value;
+            topicButton = self.topicScrollView.subviews[self.currentIndex + 1];
+            topicButton.selectionEffectlevel = value;
+        } else if (self.currentIndex == self.topicArray.count - 1) {
+            // 右边界情况，左边 view 完成滑入。
+            topicButton.selectionEffectlevel = value - 1;
+            topicButton = self.topicScrollView.subviews[self.currentIndex - 1];
+            topicButton.selectionEffectlevel = 1 - (value - 1);
+        } else {
+            // 默认情况，滑入未完成，恢复到当前 view。另一种情况是，滑入完成后，重新设置 scroll
+            // view 内容及位置后的一次触发。
+            topicButton.selectionEffectlevel = value;
+            topicButton = self.topicScrollView.subviews[self.currentIndex - 1];
+            topicButton.selectionEffectlevel = 1 - value;
+            topicButton = self.topicScrollView.subviews[self.currentIndex + 1];
+            topicButton.selectionEffectlevel = 1 - value;
+        }
     }
 }
     
@@ -153,33 +202,27 @@
     }];
 }
     
-- (void)resetCurrentTopicButton:(SRMNewsTopicButton *)topicButton {
+- (void)scrollNewCurrentTopicButton:(SRMNewsTopicButton *)topicButton {
     CGFloat offsetX = topicButton.center.x - CGRectGetWidth(self.newsListScrollView.frame) / 2;
     offsetX = MAX(offsetX, 0);
     offsetX = MIN(offsetX, self.topicScrollView.contentSize.width - CGRectGetWidth(self.topicScrollView.frame));
     [self.topicScrollView setContentOffset:CGPointMake(offsetX, 0) animated:YES];
-    self.currentTopicButton = topicButton;
 }
 
 - (void)resetDisplayedViewAtIndex:(NSInteger)index {
-    self.currentIndex = index;
-    NSInteger count = self.topicArray.count;
     CGFloat offsetX = CGRectGetWidth([UIScreen mainScreen].bounds);
-    
     
     if (index == 0) {
         index = index + 1;
         offsetX = 0;
-    } else if (index == count - 1) {
+    } else if (index == self.topicArray.count - 1) {
         index = index - 1;
         offsetX = CGRectGetWidth([UIScreen mainScreen].bounds) * 2;
     }
     
-    NSInteger leftIndex = (index - 1 + count) % count;
-    NSInteger rightIndex = (index + 1) % count;
-    [self containerView:self.leftContainerView showView:self.childViewControllers[leftIndex].view];
+    [self containerView:self.leftContainerView showView:self.childViewControllers[index - 1].view];
     [self containerView:self.centerContainerView showView:self.childViewControllers[index].view];
-    [self containerView:self.rightContainerView showView:self.childViewControllers[rightIndex].view];
+    [self containerView:self.rightContainerView showView:self.childViewControllers[index + 1].view];
     self.newsListScrollView.contentOffset = CGPointMake(offsetX, 0);
 }
 
