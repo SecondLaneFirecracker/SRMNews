@@ -10,4 +10,6 @@
 
 @interface SRMNewsListViewController : UIViewController
 
+@property (nonatomic) NSString *topic;
+
 @end
