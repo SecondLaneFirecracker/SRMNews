@@ -75,6 +75,10 @@
                             <constraint firstItem="VP8-8Q-DAB" firstAttribute="top" secondItem="0LB-Rf-kae" secondAttribute="bottom" id="Yhg-vp-h2k"/>
                             <constraint firstItem="VP8-8Q-DAB" firstAttribute="leading" secondItem="2Xi-XS-lhZ" secondAttribute="leading" id="mDs-Ue-MbJ"/>
                         </constraints>
+                        <connections>
+                            <outlet property="newsListScrollView" destination="C6j-72-RKl" id="ZOQ-eb-dsg"/>
+                            <outlet property="topicScrollView" destination="VP8-8Q-DAB" id="Ghz-LZ-KB5"/>
+                        </connections>
                     </view>
                     <toolbarItems/>
                     <navigationItem key="navigationItem" id="ChY-Te-RMO"/>

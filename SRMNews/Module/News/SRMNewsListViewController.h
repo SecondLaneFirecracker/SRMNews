@@ -7,9 +7,10 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "SRMTopicModel.h"
 
 @interface SRMNewsListViewController : UIViewController
 
-@property (nonatomic) NSString *topic;
+@property (nonatomic) SRMTopicModel *topic;
 
 @end

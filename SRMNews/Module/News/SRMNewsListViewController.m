@@ -18,6 +18,7 @@
 @implementation SRMNewsListViewController
 
 - (void)viewDidLoad {
+    [super viewDidLoad];
     self.view.backgroundColor = [UIColor lightGrayColor];
     UILabel *topicLabel = [UILabel new];
     [self.view addSubview:topicLabel];
@@ -27,9 +28,9 @@
     self.topicLabel = topicLabel;
 }
 
-- (void)setTopic:(NSString *)topic {
+- (void)setTopic:(SRMTopicModel *)topic {
     _topic = topic;
-    self.topicLabel.text = topic;
+    self.topicLabel.text = topic.name;
     [self.topicLabel sizeToFit];
 }
 

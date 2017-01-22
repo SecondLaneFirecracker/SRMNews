@@ -10,6 +10,9 @@
 		0329F2141E2383B100D66894 /* SRMNewsTopicButton.m in Sources */ = {isa = PBXBuildFile; fileRef = 0329F2131E2383B100D66894 /* SRMNewsTopicButton.m */; };
 		0329F2171E25CD1400D66894 /* SRMNewsView.m in Sources */ = {isa = PBXBuildFile; fileRef = 0329F2161E25CD1400D66894 /* SRMNewsView.m */; };
 		0329F21C1E26039F00D66894 /* SRMNewsListViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0329F21B1E26039F00D66894 /* SRMNewsListViewController.m */; };
+		03D259E31E3443CD00D7305A /* SRMBaseModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 03D259E21E3443CD00D7305A /* SRMBaseModel.m */; };
+		03D259E61E3444AF00D7305A /* SRMTopicModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 03D259E51E3444AF00D7305A /* SRMTopicModel.m */; };
+		03D259EA1E34B69300D7305A /* SRMTopicService.m in Sources */ = {isa = PBXBuildFile; fileRef = 03D259E91E34B69300D7305A /* SRMTopicService.m */; };
 		03DDE3B31E2DB7C1003AA1A1 /* UIScreen+Size.m in Sources */ = {isa = PBXBuildFile; fileRef = 03DDE3B21E2DB7C1003AA1A1 /* UIScreen+Size.m */; };
 		03DFC9FA1E15FE55003266A0 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 03DFC9F91E15FE55003266A0 /* main.m */; };
 		03DFC9FD1E15FE55003266A0 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 03DFC9FC1E15FE55003266A0 /* AppDelegate.m */; };
@@ -32,6 +35,12 @@
 		0329F2181E25D09400D66894 /* Reveal.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Reveal.framework; sourceTree = "<group>"; };
 		0329F21A1E26039F00D66894 /* SRMNewsListViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SRMNewsListViewController.h; sourceTree = "<group>"; };
 		0329F21B1E26039F00D66894 /* SRMNewsListViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SRMNewsListViewController.m; sourceTree = "<group>"; };
+		03D259E11E3443CD00D7305A /* SRMBaseModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SRMBaseModel.h; sourceTree = "<group>"; };
+		03D259E21E3443CD00D7305A /* SRMBaseModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SRMBaseModel.m; sourceTree = "<group>"; };
+		03D259E41E3444AF00D7305A /* SRMTopicModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SRMTopicModel.h; sourceTree = "<group>"; };
+		03D259E51E3444AF00D7305A /* SRMTopicModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SRMTopicModel.m; sourceTree = "<group>"; };
+		03D259E81E34B69300D7305A /* SRMTopicService.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SRMTopicService.h; sourceTree = "<group>"; };
+		03D259E91E34B69300D7305A /* SRMTopicService.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SRMTopicService.m; sourceTree = "<group>"; };
 		03DDE3B11E2DB7C1003AA1A1 /* UIScreen+Size.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIScreen+Size.h"; sourceTree = "<group>"; };
 		03DDE3B21E2DB7C1003AA1A1 /* UIScreen+Size.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIScreen+Size.m"; sourceTree = "<group>"; };
 		03DFC9F51E15FE55003266A0 /* SRMNews.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SRMNews.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -79,6 +88,26 @@
 			path = View;
 			sourceTree = "<group>";
 		};
+		03D259E01E343CAB00D7305A /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				03D259E11E3443CD00D7305A /* SRMBaseModel.h */,
+				03D259E21E3443CD00D7305A /* SRMBaseModel.m */,
+				03D259E41E3444AF00D7305A /* SRMTopicModel.h */,
+				03D259E51E3444AF00D7305A /* SRMTopicModel.m */,
+			);
+			path = Model;
+			sourceTree = "<group>";
+		};
+		03D259E71E34B66F00D7305A /* Service */ = {
+			isa = PBXGroup;
+			children = (
+				03D259E81E34B69300D7305A /* SRMTopicService.h */,
+				03D259E91E34B69300D7305A /* SRMTopicService.m */,
+			);
+			path = Service;
+			sourceTree = "<group>";
+		};
 		03DFC9EC1E15FE55003266A0 = {
 			isa = PBXGroup;
 			children = (
@@ -102,6 +131,8 @@
 			isa = PBXGroup;
 			children = (
 				03DFCA161E1631E2003266A0 /* Module */,
+				03D259E71E34B66F00D7305A /* Service */,
+				03D259E01E343CAB00D7305A /* Model */,
 				03DFCA1E1E163F9E003266A0 /* Category */,
 				03DFC9FB1E15FE55003266A0 /* AppDelegate.h */,
 				03DFC9FC1E15FE55003266A0 /* AppDelegate.m */,
@@ -316,13 +347,16 @@
 			buildActionMask = 2147483647;
 			files = (
 				03DFCA281E1654DA003266A0 /* SRMNewsViewController.m in Sources */,
+				03D259E31E3443CD00D7305A /* SRMBaseModel.m in Sources */,
 				03DFCA1C1E1631E2003266A0 /* SRMTabBarController.m in Sources */,
 				0329F2171E25CD1400D66894 /* SRMNewsView.m in Sources */,
+				03D259E61E3444AF00D7305A /* SRMTopicModel.m in Sources */,
 				0329F2141E2383B100D66894 /* SRMNewsTopicButton.m in Sources */,
 				03DFCA211E163FBC003266A0 /* UIColor+Hex.m in Sources */,
 				0329F21C1E26039F00D66894 /* SRMNewsListViewController.m in Sources */,
 				03DFCA241E164A81003266A0 /* SRMNavigationController.m in Sources */,
 				03DFC9FD1E15FE55003266A0 /* AppDelegate.m in Sources */,
+				03D259EA1E34B69300D7305A /* SRMTopicService.m in Sources */,
 				03DDE3B31E2DB7C1003AA1A1 /* UIScreen+Size.m in Sources */,
 				03DFC9FA1E15FE55003266A0 /* main.m in Sources */,
 			);
@@ -436,6 +470,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				DEVELOPMENT_TEAM = C38F6DTM82;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
@@ -467,6 +502,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				DEVELOPMENT_TEAM = C38F6DTM82;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",

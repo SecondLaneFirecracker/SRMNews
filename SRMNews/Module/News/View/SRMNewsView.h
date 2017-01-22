@@ -10,4 +10,8 @@
 
 @interface SRMNewsView : UIView
 
+- (void)initializeWithController:(UIViewController *)controller topicArray:(NSArray<NSString *> *)topicArray;
+- (void)centerTopicButtonAtIndex:(NSInteger)index;
+- (void)updateTopicButtonStyle;
+
 @end
