@@ -13,6 +13,5 @@
 
 + (instancetype)sharedInstance;
 - (NSArray<SRMTopicModel *> *)getTopicList;
-- (NSArray<NSString *> *)getTopicNameList;
 
 @end

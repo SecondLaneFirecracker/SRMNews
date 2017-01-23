@@ -37,14 +37,4 @@
     return self.topicList;
 }
 
-- (NSArray<NSString *> *)getTopicNameList {
-    NSMutableArray *topicNameList = [NSMutableArray array];
-    
-    [self.topicList enumerateObjectsUsingBlock:^(SRMTopicModel *topic, NSUInteger idx, BOOL * _Nonnull stop) {
-        [topicNameList addObject:topic.name];
-    }];
-    
-    return [topicNameList copy];
-}
-
 @end

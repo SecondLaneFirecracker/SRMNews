@@ -12,6 +12,7 @@
 #import "SRMNewsTopicButton.h"
 #import "SRMTopicService.h"
 #import "SRMTopicModel.h"
+#import "SRMNewsTopicNameListAdapter.h"
 #import "UIColor+Hex.h"
 #import "UIScreen+Size.h"
 #import "Masonry.h"
@@ -117,7 +118,8 @@
 
 - (void)initializeTopicModel {
     self.topicArray = [[SRMTopicService sharedInstance] getTopicList];
-    self.topicNameArray = [[SRMTopicService sharedInstance] getTopicNameList];
+    id<SRMAdapter> topicNameListAdapter = [SRMNewsTopicNameListAdapter new];
+    self.topicNameArray = [topicNameListAdapter transformFromOriginalData:self.topicArray];
 }
 
 @end
